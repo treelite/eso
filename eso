@@ -1,0 +1,46 @@
+#!/usr/bin/env node
+
+var eso = require('./lib/eso');
+var util = require('util');
+
+var config = {};
+
+config.onerror = function (msg) {
+    util.error(msg);
+};
+
+config.onsuccess = function (msg) {
+    var configStr = [];
+
+    for (var key in config) {
+        if (config.hasOwnProperty(key) 
+                && Object.prototype.toString.call(config[key]) != '[object Function]'
+        ) {
+            configStr.push(key + ':' + config[key]);
+        }
+    }
+    util.puts('Finish', '-------', configStr.join('\n'));
+};
+
+config.onmessage = function (msg) {
+    util.puts(msg);
+};
+
+
+var options = process.argv[2];
+if (options == '-o') {
+    options = process.argv.slice(3);
+    options.forEach(function (item, index) {
+        item = item.split('=');
+        config[item[0]] = item[1];
+    });
+
+    config.optimize = config.optimize == 'true';
+}
+else {
+    config.name = options.replace(/.js$/, '');
+}
+
+eso.combine(config);
+
+/* vim: set ft=javascript: */

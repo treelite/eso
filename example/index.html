@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Example For ESO</title>
+    <style>
+        body {font-size:12px;line-height:1.5}
+        .code {padding: 0px 3px; background:#CCC}
+        #box {background: #CCC;border: 1px solid #333;padding:5px}
+    </style>
+</head>
+<body>
+    <p>Run <span class="code">../eso -o baseUrl=./ name=main out=asset/main.js</span></p>
+    <div id="box"></div>
+    <script src="lib/esl.js"></script>
+    <script type="text/javascript">
+        require.config({
+            baseUrl: './src/',
+            paths: {
+                // release
+                //'entry/main': 'asset/main'
+            }
+        });
+        require(['entry/main'], function (main) {
+                main.enter('box', 'eso');
+        });
+    </script>
+</body>
+</html>
