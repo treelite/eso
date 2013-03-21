@@ -2,10 +2,14 @@
 
 var eso = require('./lib/eso');
 var util = require('util');
+var fs = require('fs');
 
 var config = {};
 
 config.onerror = function (msg) {
+    if (msg.indexOf('[ERROR]') < 0) {
+        msg = '[ERROR]' + msg;
+    }
     util.error(msg);
 };
 
@@ -16,7 +20,11 @@ config.onsuccess = function (msg) {
         if (config.hasOwnProperty(key) 
                 && Object.prototype.toString.call(config[key]) != '[object Function]'
         ) {
-            configStr.push(key + ':' + config[key]);
+            value = config[key];
+            if (typeof value === 'object') {
+                value  = JSON.stringify(value);
+            }
+            configStr.push(key + ':' + value);
         }
     }
     util.puts('Finish', '-------', configStr.join('\n'));
@@ -26,13 +34,45 @@ config.onmessage = function (msg) {
     util.puts(msg);
 };
 
+function loadConfigFile(file) {
+    var data = fs.readFileSync(file, 'utf8');
+    try {
+        data = JSON.parse(data);
+    }
+    catch (e) {
+        data = {};
+        util.error('parse ' + file + ' fail..');
+    }
+
+    for (var key in data) {
+        if (data.hasOwnProperty(key)) {
+            config[key] = data[key];
+        }
+    }
+}
+
 
 var options = process.argv[2];
 if (options == '-o') {
     options = process.argv.slice(3);
     options.forEach(function (item, index) {
-        item = item.split('=');
-        config[item[0]] = item[1];
+        if (item.indexOf('=') > 0) {
+            item = item.split('=');
+            var key = item[0];
+            var value = item[1];
+            if (key.indexOf('.') < 0) {
+                config[key] = value;
+            }
+            else {
+                key = key.split('.');
+                config[key[0]] = config[key[0]] || {};
+                item = config[key[0]];
+                item[key[1]] = value;
+            }
+        }
+        else if (item.indexOf('.js') > 0) {
+            loadConfigFile(item);
+        }
     });
 
     config.optimize = config.optimize == 'true';
