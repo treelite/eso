@@ -5,5 +5,9 @@
     },
     "optimize": "none",
     "name": "entry/main",
-    "out": "asset/main.js"
+    "out": "asset/main.js",
+
+    "reqConfig": "xxx",
+    "modules": [],
+    "outDir": ""
 }
