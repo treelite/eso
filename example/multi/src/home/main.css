@@ -1,0 +1,69 @@
+#daily-report {
+    padding-bottom: 5px;
+    border-bottom: 1px solid #CCC;
+}
+
+#daily-report:after {
+    content: ' ';
+    display: block;
+    clear: both;
+    height: 1px;
+    overflow: hidden;
+    visibility: hidden;
+    zoom: 1;
+}
+
+#daily-report dl {
+    float: left;
+    margin-left: 10px;
+}
+
+#daily-report dl.col-a {
+    width: 60%;
+}
+
+#daily-report dl.col-b {
+    width: 35%;
+}
+
+#daily-report dt {
+    padding-bottom: 5px;
+}
+
+#daily-report dd {
+    height: 80px;
+    border: 1px solid #CCC;
+    padding: 10px 0px;
+}
+
+#daily-report div {
+    float: left;
+    width: 48%;
+}
+
+#daily-report div.lst {
+    border-left: 1px solid #CCC;
+}
+
+#daily-report .col-b div {
+    padding-top: 10px;
+}
+
+#daily-report p {
+    margin-left: 20px;
+    margin-bottom: 5px;
+}
+
+#daily-report p a {
+    margin: 0px 3px;
+}
+
+#daily-report strong {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0079F5;
+}
+
+#daily-report .lst strong {
+    color: #F55C00;
+}

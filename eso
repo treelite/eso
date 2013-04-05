@@ -1,6 +1,5 @@
 #!/usr/bin/env node
 
-var eso = require('./lib/eso');
 var util = require('util');
 var fs = require('fs');
 
@@ -81,6 +80,11 @@ else {
     config.name = options.replace(/.js$/, '');
 }
 
-eso.combine(config);
+if (config.name || config.modules) {
+    require('./lib/js').combine(config);
+}
+else if (config.entry) {
+    require('./lib/html').handle(config);
+}
 
 /* vim: set ft=javascript: */

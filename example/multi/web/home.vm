@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+#parse("/tcom/utils.macro.vm")
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>离线宝</title>
+    #includeStatic
+    <link rel="stylesheet" href="$!{webRoot}/src/home/main.css" />
+</head>
+<body>
+    #header('home')
+
+    <div id="container">
+        <div id="sidebar">
+            <div id="account-info">
+                <p><em>账户名：</em><strong>$!utils.escapeInH($userInfo.userName)</strong><span class="icon icon-v#if($userInfo.vstatus != 2) icon-v-disabled#{end}"></span></p>
+                <p><em>余&nbsp;&nbsp;额：</em>$!utils.escapeInH($baseInfo.balance)</p>
+                #if($userInfo.userType == 'fgs')
+                <p class="opt"><a href="#" class="ui-button">充值</a><a href="#" class="ui-button">转账</a></p>
+                #end
+            </div>
+
+            <div id="app-info"></div>
+
+            <div id="notice-area"></div>
+        </div>
+
+        <div id="content">
+            <div id="daily-report"></div>
+
+            <div id="chart1"></div>
+            <div id="chart2"></div>
+            <div id="chart3"></div>
+        </div>
+    </div>
+
+    #footer
+
+<script src="$!{webRoot}/src/common/config.js"></script>
+<script type="text/javascript">
+    require(['common/message', 'home/main'], function (message, main) {
+        message.init();
+        main.enter('$!userInfo.userType');
+    });
+</script>
+</body>
+</html>
