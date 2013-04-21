@@ -17,6 +17,7 @@
   "license": "BSD",
   "readmeFilename": "README.md",
   "dependencies": {
-    "esprima": "~1.0.2"
+    "esprima": "~1.0.2",
+    "uglify-js": "~2.2.5"
   }
 }
